@@ -1,4 +1,4 @@
 config.py
 /photo_sender/config.py
-/photo_sender/data/orfDB.db
+*.db
 
