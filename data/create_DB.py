@@ -20,6 +20,5 @@ for line in f:
     str.append(ln)
     c.executemany('INSERT INTO dictionary VALUES ( ?, ?)', str)
     str = []
-
 conn.commit()
 conn.close()
