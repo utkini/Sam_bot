@@ -1,33 +1,45 @@
-import config
 import telebot
-import parser
+import requests
+import config
 import data
 
-bot = telebot.TeleBot(config.token);
+token = config.token
+bot = telebot.TeleBot(token)
 
-@bot.message_handler(commands=['start'])
-def answer(message):
-    bot.send_message(message.chat.id, data.hello)
+@bot.message_handler(func=lambda message: True, content_types=['text'])
+def ans(message):
 
-@bot.message_handler(commands=['help'])
-def answer(message):
-    bot.send_message(message.chat.id, data.helper)
+    mess = data.initial(message.text)
+    bot.send_message(message.chat.id, mess)
 
-@bot.message_handler(content_types = ["text"])
-def repeat_all_messages(message):
-    '''
-    score = []
-    score.append(message.text)
-    if message.text == data.check:
-        bot.send_message(message.chat.id, score)
-    else:
-        bot.send_message(message.chat.id, 'ok')
-    '''
-    bot.send_message(message.chat.id, parser.parse_message(message.text))
-    if parser.parse_message(message.text) == True:
-        bot.send_photo(message.chat.id, data.picture)
-    else:
-        bot.send_audio(message.chat.id, data.audio)
+
+
+
 
 if __name__ == '__main__':
-    bot.polling(none_stop = True)
+    bot.polling(none_stop=True)
+# Это для тренировку реквестов
+# URL = 'https://api.telegram.org/bot' + token + '/'
+#
+# def get_updates():
+#     url = URL + 'getUpdates'
+#     req = requests.get(url)
+#     dis = req.json()
+#     print(dis)
+#     print()
+#     for di in dis['result']:
+#         d = di['message']
+#         text = d['text']
+#         print(text) хдесь выведется текст за этот день, всеь от каждого пользователя
+#
+#
+#
+#
+#
+# def main():
+#     get_updates()
+#
+#
+#
+# if __name__ == '__main__':
+#     main()
