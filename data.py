@@ -1,17 +1,21 @@
-"""HI"""
-# picture = 'http://cliparting.com/wp-content/uploads/2016/06/Smiley-thumbs-up-clipart-clipart.jpeg'
-#
-# audio = open('/home/ihgorek/Documents/PyCharm/photo_sender/data/NO.mp3', 'rb')
-#
-# hello = 'Hi!'
-#
-# helper = 'Please entered your email and i checked him'
-#
-# check = 'end'
-def initial(messege):
-    with open('data/orf_2.txt') as f:
-        for st in f:
-            if messege == st[0:len(messege)]:
-                return st[0:len(messege)+1]
-        else:
-            return 'Давай что-нибудь другое'
+from telebot import types
+'''
+Данный модуль предназначен для хранения информации бота и правильной передачи ему
+'''
+
+# Сообщение приветствия для всех, кто напишет /start
+def welcome (message):
+    name = message.chat.first_name + '! '
+    intro = 'Меня зовут Bot-Sam и я очень рад, что ты обратился ко мне, дорогой друг! Я пока умею не очень' \
+            ' много вещей, но, думаю, что-нибудь из них тебя заинтересует) напиши /help и я расскажу тебе про них'
+    ans = 'Привет, ' + name + intro
+    return ans
+
+
+def helper(message):
+    return "Ха, пока не расскажу)" \
+           " но пока ты можешь ввести часть слова на русском языке, а я напишу его следующую букву"
+
+
+
+choose_game = 'В какую игру ты хочешь сыграть со мной?'
