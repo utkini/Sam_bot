@@ -3,10 +3,14 @@ from telebot import types
 import requests
 import config
 import data
-import pars
+import search_word
 
 token = config.token
 bot = telebot.TeleBot(token)
+
+def lower(text):
+    return text.lower()
+
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -18,20 +22,20 @@ def helper(message):
     helpr = data.helper(message)
     bot.send_message(message.chat.id, helpr)
 
-@bot.message_handler(commands=['game'])
-def game_change(message):
-    makup_game = types.ReplyKeyboardMarkup()
-    makup_game.row('Балда-game', 'Акинатор-game')
-    bot.send_message(message.chat.id,data.choose_game,reply_markup=makup_game)
+@bot.message_handler(regexp='Какое слово')
+def answer(message):
+    bot.send_message(message.chat.id,balda.get_word())
 
-
-
+balda = search_word.balda_game()
 @bot.message_handler(func=lambda message: True, content_types=['text'])
-def ans(message):
-
-    mess = pars.initial(message.text)
-    bot.send_message(message.chat.id, mess)
-
+def answ(message):
+    tmp = lower(message.text)
+    search = balda.word_search(tmp)
+    letter = balda.get_letter()
+    ans = 'Пока слово ' + search + '\n' + letter
+    if search == 'done':
+        balda.restart()
+    bot.send_message(message.chat.id, ans)
 
 
 
