@@ -18,5 +18,5 @@ def word_search(mess):
                 lose_word = word
         return lose_word
 
-wrd = input('Введи слово \n')
-print(word_search(wrd))
+# wrd = input('Введи слово \n')
+# print(word_search(wrd))

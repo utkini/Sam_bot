@@ -1,6 +1,7 @@
 import re
 from pymongo import MongoClient
 import pymongo
+import random
 
 
 #
@@ -25,31 +26,40 @@ class balda_game:
         self.index = 0
         self.letter = ''
         self.f = False
-        self.wword = ''
+        self.how_word = ''
 
     def word_search(self, mess):
         with MongoClient('localhost', 27017) as client:
             db = client.db_orf
             coll = db.orf_coll
-            self.word = self.word + mess
-            reg = '^' + self.word
+            tmp = self.word
+            reg = '^' + self.word + mess
             mens = coll.find({"word": {"$regex": reg}})
+            ch = coll.find({"word": {"$regex": reg}}).count()
+            check = random.randint(0,ch-1)
+            i = 0
             for men in mens:
                 try:
-                    word = men['word']
-                    self.index = len(self.word)
-                    if (len(word) - self.index) % 2 == 0:
+                    self.word = tmp + mess
+                    if check != i:
+                        i += 1
+                    else:
+                        word = men['word']
+                        self.index = len(self.word)
+                        if (len(word) - self.index) % 2 == 0:
+                            self.f = True
+                        else:
+                            self.f = False
                         self.word = word[:self.index + 1]
                         self.letter = word[self.index]
-                        self.f = True
-                        self.wword = word
+                        self.how_word = word
+                        if len(word) == len(self.word):
+                            self.word = 'done'
                         return self.word
-                    else:
-                        self.f = False
-                        self.wword = word
                 except IndexError as e:
                     self.word = 'done'
-            return self.word
+                    return self.word
+            return 'There is no such word'
 
     def get_letter(self):
         intro = 'Я говорю букву: \n'
@@ -64,5 +74,5 @@ class balda_game:
 
     def get_word(self):
         intro = 'Я загадал слово \n'
-        ans = intro + self.wword
+        ans = intro + self.how_word
         return ans
