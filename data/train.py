@@ -20,3 +20,4 @@ def word_search(mess):
 
 # wrd = input('Введи слово \n')
 # print(word_search(wrd))
+

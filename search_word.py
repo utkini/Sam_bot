@@ -36,7 +36,8 @@ class balda_game:
             reg = '^' + self.word + mess
             mens = coll.find({"word": {"$regex": reg}})
             ch = coll.find({"word": {"$regex": reg}}).count()
-            check = random.randint(0,ch-1)
+            if ch != 0:
+                check = random.randint(0,ch-1)
             i = 0
             for men in mens:
                 try:

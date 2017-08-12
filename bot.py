@@ -45,7 +45,7 @@ def answer(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def answ(message):
     tmp = lower(message.text)
-    tmp = seporate(tmp)
+    tmp = seporate(tmp) #Нужно написать проверку на букву а не на цифру и не на число и на корректность ввода
     if tmp == 'Ooops':
         bot.send_message(message.chat.id,'Дружище, что-то пошло не так... Введи пожалуйста букву или слово еще разок')
     search = balda.word_search(tmp)
