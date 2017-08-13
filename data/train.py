@@ -21,3 +21,12 @@ def word_search(mess):
 # wrd = input('Введи слово \n')
 # print(word_search(wrd))
 
+def sepr(mess):
+    mess = mess.lower()
+    for c in mess:
+        if ord(c)<1040 or ord(c)>1103:
+            return 'Вы ввели что-то не то'
+    return  'Все хорошо'
+
+mess = input()
+print(sepr(mess))
