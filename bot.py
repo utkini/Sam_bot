@@ -12,6 +12,7 @@ def lower(text):
     return text.lower()
 
 
+
 def sepаr(text):
     try:
         for c in text:
