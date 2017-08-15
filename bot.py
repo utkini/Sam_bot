@@ -1,7 +1,8 @@
 import telebot
-import config
-import data
-import search_word
+from sam_bot.data import search_word
+from sam_bot.data import data
+from sam_bot.data import config
+
 
 token = config.token
 bot = telebot.TeleBot(token)
