@@ -1,8 +1,6 @@
 *.db
-orf_2.txt
-db and other/orf.txt
-db and other/orf_2.txt
-db and other/orfDB.db
-db and other/words.txt
+*.txt
+data/__init__.py
+db and other/__init__.py
 db and other/pf.py
 

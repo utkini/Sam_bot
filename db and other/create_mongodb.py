@@ -8,7 +8,7 @@ db = client.db_orf
 coll = db.orf_coll
 
 # Ввод нужных значений в нашу базу данных
-coll.remove(None)
+# coll.remove(None)
 with open('words.txt') as f:
     id = 0
     for l in f:
