@@ -3,7 +3,6 @@ from sam_bot.data import search_word
 from sam_bot.data import data
 from sam_bot.data import config
 
-
 token = config.token
 bot = telebot.TeleBot(token)
 
@@ -23,9 +22,10 @@ def sepаr(text):
         return 'Ooops'
 
 
-balda = search_word.balda_game()
+balda = search_word.BaldaGame()
 
-#Обрабатываем команду /start и выводим приветствие для пользователя, обращаеся к нему по имени
+
+# Обрабатываем команду /start и выводим приветствие для пользователя, обращаеся к нему по имени
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     welcome = data.welcome(message)
@@ -53,6 +53,7 @@ def answer(message):
 def answer(message):
     balda.restart()
     bot.send_message(message.chat.id, 'Хорошо, давай начнем сначала')
+
 
 # Основная функция, которая берет все сообщения, если они дошли до нее и обрабатывает.
 # Тело функции проверяет пришедшее сообщение на корректность и превращает его в нужый вид для класса балда,
