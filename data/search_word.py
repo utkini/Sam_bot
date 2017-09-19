@@ -1,7 +1,6 @@
-import re
-from pymongo import MongoClient
-import pymongo
 import random
+
+from pymongo import MongoClient
 
 
 #
@@ -20,7 +19,7 @@ import random
 #         else:
 #             return 'Давай что-нибудь другое'
 
-class balda_game:
+class BaldaGame:
     def __init__(self):
         self.word = ''
         self.index = 0
