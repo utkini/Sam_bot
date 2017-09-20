@@ -30,7 +30,7 @@ session_balda = check_word.UserWord()
 @bot.message_handler(commands=['start'])
 def starter(message):
     welcome = data.welcome(message)
-    session_balda.create_new_user(message.chat.first_name,message.chat.id)
+    session_balda.create_new_user(message.chat.first_name,message.chat.id) # Создаем пользователя в БД
     bot.send_message(message.chat.id, welcome)
 
 
@@ -46,6 +46,8 @@ def support(message):
 # в дальнейшем
 @bot.message_handler(regexp='[Кк]акое слово')
 def how_word(message):
+    word = session_balda.get_word_bot(message.chat.first_name,message.chat.id)
+    # нужно заменить word на balda.get_word() для того, чтобы работала вторая БД
     bot.send_message(message.chat.id, balda.get_word())
 
 
@@ -54,6 +56,7 @@ def how_word(message):
 @bot.message_handler(regexp='[Зз]аново')
 def again(message):
     balda.restart()
+    session_balda.restart(message.chat.first_name,message.chat.id)
     bot.send_message(message.chat.id, 'Хорошо, давай начнем сначала')
 
 
