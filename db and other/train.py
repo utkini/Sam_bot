@@ -16,9 +16,19 @@ import re
 # mess = input()
 # print(sepr(mess))
 
-with open('words.txt') as words, open('new_words.txt' , 'w') as new_word:
-    for i,w in enumerate(words):
-        word_one = w.rstrip('\n')
+words = open('words.txt')
+new_word = open('new_words.txt' , 'w')
+w = "1"
+for word in words:
+    tmp = word[:len(word)-1]
+    if w not in tmp:
+        new_word.write(word)
+        w = tmp
+
+new_word.close()
+words.close()
+
+
 
 
 
