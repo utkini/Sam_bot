@@ -100,7 +100,7 @@ def answer_balda(message):
         elif search == 'There is no such word':
             bot.send_message(message.chat.id, 'Я не знаю такого слова... Давай ты скажешь букву заного')
         else:
-            # вносит данную игру в БД сессий
+            # Вносит данную игру в БД сессий
             session_balda.set_word(message.chat.first_name, message.chat.id, search)
             session_balda.set_word_bot(message.chat.first_name, message.chat.id, balda.how_word)
 
