@@ -26,11 +26,12 @@ def sepаr(text):
 balda = search_word.BaldaGame()
 session_balda = check_word.UserWord()
 
+
 # Обрабатываем команду /start и выводим приветствие для пользователя, обращаеся к нему по имени
 @bot.message_handler(commands=['start'])
 def starter(message):
     welcome = data.welcome(message)
-    session_balda.create_new_user(message.chat.first_name,message.chat.id) # Создаем пользователя в БД
+    session_balda.create_new_user(message.chat.first_name, message.chat.id)  # Создаем пользователя в БД
     bot.send_message(message.chat.id, welcome)
 
 
@@ -42,13 +43,23 @@ def support(message):
     bot.send_message(message.chat.id, helper)
 
 
+# Команда для админа, иказывает сколько пользователей играло в игру балда
+#
+# !!!!Написать декоратор для проверки на админа!!!!
+#
+@bot.message_handler(commands=['users'])
+def how_users(message):
+    count = session_balda.how_users()
+    bot.send_message(message.chat.id, count)
+
+
 # Первый обработчик подсказки. Если игрок не знает слово, он может спросить бота и отталкиваться от этого
 # в дальнейшем
 @bot.message_handler(regexp='[Кк]акое слово')
 def how_word(message):
-    word = session_balda.get_word_bot(message.chat.first_name,message.chat.id)
+    word = session_balda.get_word_bot(message.chat.first_name, message.chat.id)
     # нужно заменить word на balda.get_word() для того, чтобы работала вторая БД
-    bot.send_message(message.chat.id, balda.get_word())
+    bot.send_message(message.chat.id, word)
 
 
 # Второй обработчик подсказки Если игрок хочет начать сначала, он в любой момент может сказать боту заново
@@ -56,7 +67,7 @@ def how_word(message):
 @bot.message_handler(regexp='[Зз]аново')
 def again(message):
     balda.restart()
-    session_balda.restart(message.chat.first_name,message.chat.id)
+    session_balda.restart(message.chat.first_name, message.chat.id)
     bot.send_message(message.chat.id, 'Хорошо, давай начнем сначала')
 
 
@@ -73,7 +84,11 @@ def answer_balda(message):
         bot.send_message(message.chat.id, 'Дружище, что-то пошло не так...'
                                           ' Введи пожалуйста букву или слово еще разок')
     else:
+        # Эта команда присваивает переменной экземпляра  значение, которое принадлежит этому пользователю
+        balda.word = session_balda.get_word(message.chat.first_name, message.chat.id)
+
         search = balda.word_search(tmp)
+
         letter = balda.get_letter()
         ans = letter + '\n' + data.middle_comment_ans() + '\n' + search
         if search == 'done':
@@ -85,6 +100,10 @@ def answer_balda(message):
         elif search == 'There is no such word':
             bot.send_message(message.chat.id, 'Я не знаю такого слова... Давай ты скажешь букву заного')
         else:
+            # вносит данную игру в БД сессий
+            session_balda.set_word(message.chat.first_name, message.chat.id, search)
+            session_balda.set_word_bot(message.chat.first_name, message.chat.id, balda.how_word)
+
             bot.send_message(message.chat.id, ans)
 
 
