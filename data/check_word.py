@@ -56,6 +56,16 @@ class UserWord(object):
                           'user_id': user_id},
                          {'$set': {'session.word_bot': word_bot}})
 
+    def restart(self, username, user_id):
+        self.coll.update({'username': username,
+                          'user_id': user_id},
+                         {'$set':
+                              {
+                                  'session.word': "",
+                                  'session.word_bot': ""
+                              }
+                         })
+
     def get_word(self, username, user_id):
         sample = self.coll.find_one({'username': username,
                                      'user_id': user_id})
@@ -67,6 +77,11 @@ class UserWord(object):
                                      'user_id': user_id})
         word_bot = sample['session']['word_bot']
         return word_bot
+
+    def how_users(self):
+        count = self.coll.find({}).count()
+        return count
+
 
     def get_all(self):
         sample = self.coll.find({})
