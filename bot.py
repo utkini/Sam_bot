@@ -2,6 +2,7 @@ import telebot
 from sam_bot.data import search_word
 from sam_bot.data import data
 from sam_bot.data import config
+from sam_bot.data import check_word
 
 token = config.token
 bot = telebot.TeleBot(token)
@@ -23,34 +24,35 @@ def sepаr(text):
 
 
 balda = search_word.BaldaGame()
-
+session_balda = check_word.UserWord()
 
 # Обрабатываем команду /start и выводим приветствие для пользователя, обращаеся к нему по имени
 @bot.message_handler(commands=['start'])
-def send_welcome(message):
+def starter(message):
     welcome = data.welcome(message)
+    session_balda.create_new_user(message.chat.first_name,message.chat.id)
     bot.send_message(message.chat.id, welcome)
 
 
 # Обрабатываем команду /help  и выводим правила игры с некоторыми подсказками или словами помощниками,
 # если игра очень сложная.
 @bot.message_handler(commands=['help'])
-def helper(message):
-    helpr = data.helper(message)
-    bot.send_message(message.chat.id, helpr)
+def support(message):
+    helper = data.helper()
+    bot.send_message(message.chat.id, helper)
 
 
 # Первый обработчик подсказки. Если игрок не знает слово, он может спросить бота и отталкиваться от этого
 # в дальнейшем
 @bot.message_handler(regexp='[Кк]акое слово')
-def answer(message):
+def how_word(message):
     bot.send_message(message.chat.id, balda.get_word())
 
 
 # Второй обработчик подсказки Если игрок хочет начать сначала, он в любой момент может сказать боту заново
 # и проболжить играть
 @bot.message_handler(regexp='[Зз]аново')
-def answer(message):
+def again(message):
     balda.restart()
     bot.send_message(message.chat.id, 'Хорошо, давай начнем сначала')
 
@@ -61,7 +63,7 @@ def answer(message):
 # В зависимости от полученных данных от класса уже можно производить оценку и выбирать по какому сценарию игры
 # отвечать
 @bot.message_handler(func=lambda message: True, content_types=['text'])
-def answ(message):
+def answer_balda(message):
     tmp = lower(message.text)
     tmp = sepаr(tmp)  # Нужно написать проверку на букву а не на цифру и не на число и на корректность ввода
     if tmp == 'Ooops':
