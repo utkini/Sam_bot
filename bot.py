@@ -50,7 +50,8 @@ def support(message):
 @bot.message_handler(commands=['users'])
 def how_users(message):
     count = session_balda.how_users()
-    bot.send_message(message.chat.id, count)
+    ans = 'Количество людей, которые играли со мной: ' + str(count)
+    bot.send_message(message.chat.id, ans)
 
 
 # Первый обработчик подсказки. Если игрок не знает слово, он может спросить бота и отталкиваться от этого
@@ -59,7 +60,8 @@ def how_users(message):
 def how_word(message):
     word = session_balda.get_word_bot(message.chat.first_name, message.chat.id)
     # нужно заменить word на balda.get_word() для того, чтобы работала вторая БД
-    bot.send_message(message.chat.id, word)
+    ans = 'Я загадал слово:\n' + word
+    bot.send_message(message.chat.id, ans)
 
 
 # Второй обработчик подсказки Если игрок хочет начать сначала, он в любой момент может сказать боту заново
@@ -93,12 +95,16 @@ def answer_balda(message):
         ans = letter + '\n' + data.middle_comment_ans() + '\n' + search
         if search == 'done':
             balda.restart()
+            an = balda.get_word()
             if balda.f == True:
-                bot.send_message(message.chat.id, 'Ну вот я и победил. Давай еще раз! Говори букву')
+                win_ans = 'У нас получилось слово:\n' + an + '\nИ получается, что это раунд за мной!\n'
+                bot.send_message(message.chat.id, win_ans + 'Давай еще раз! Говори букву')
             else:
-                bot.send_message(message.chat.id, 'Я.. проиграл... Нужно срочно отыграться! Говори букву')
+                lose_ans = 'Ну вот и все... Я говорю букву: ' + an[len(an) - 1] + '\n' + 'И у нас ' \
+                                                                                         'получается слово\n' + an
+                bot.send_message(message.chat.id, lose_ans + '\nЯ проиграл... Нужно срочно отыграться! Говори букву')
         elif search == 'There is no such word':
-            bot.send_message(message.chat.id, 'Я не знаю такого слова... Давай ты скажешь букву заного')
+            bot.send_message(message.chat.id, 'Я не знаю такого слова... Давай ты скажешь букву заново')
         else:
             # Вносит данную игру в БД сессий
             session_balda.set_word(message.chat.first_name, message.chat.id, search)
