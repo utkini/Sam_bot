@@ -66,6 +66,14 @@ class UserWord(object):
                               }
                          })
 
+    def user_check(self, username, user_id):
+        count = self.coll.find({'username': username,
+                                'user_id': user_id}).count()
+        if count == 0:
+            return False
+        else:
+            return True
+
     def get_word(self, username, user_id):
         sample = self.coll.find_one({'username': username,
                                      'user_id': user_id})
