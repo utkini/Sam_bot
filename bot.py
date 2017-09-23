@@ -3,6 +3,7 @@ from sam_bot.data import search_word
 from sam_bot.data import data
 from sam_bot.data import config
 from sam_bot.data import check_word
+from sam_bot.data import news_parser
 
 token = config.token
 bot = telebot.TeleBot(token)
@@ -25,6 +26,7 @@ def sepаr(text):
 
 balda = search_word.BaldaGame()
 session_balda = check_word.UserWord()
+n = news_parser.NewsVillageParser()
 
 
 # Обрабатываем команду /start и выводим приветствие для пользователя, обращаеся к нему по имени
@@ -55,6 +57,13 @@ def how_users(message):
     count = session_balda.how_users()
     ans = 'Количество людей, которые играли со мной: ' + str(count)
     bot.send_message(message.chat.id, ans)
+
+
+@bot.message_handler(commands=['news'])
+def get_news(message):
+    news = n.news_in_business()
+    for new in news:
+        bot.send_message(message.chat.id, new)
 
 
 # Первый обработчик подсказки. Если игрок не знает слово, он может спросить бота и отталкиваться от этого
