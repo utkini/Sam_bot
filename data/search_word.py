@@ -34,9 +34,9 @@ class BaldaGame:
                             self.f = True
                         else:
                             self.f = False
+                        self.how_word = word
                         self.word = word[:self.index + 1]
                         self.letter = word[self.index]
-                        self.how_word = word
                         if len(word) == len(self.word):
                             self.word = 'done'
                         return self.word

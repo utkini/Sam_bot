@@ -101,10 +101,11 @@ def answer_balda(message):
                     session_balda.restart(message.chat.username, message.chat.id)
                     bot.send_message(message.chat.id, win_ans + 'Давай еще раз! Говори букву')
                 else:
-                    lose_ans = 'Ну вот и все... Я говорю букву: ' + an[len(an) - 1] + '\n' + 'И у нас ' \
-                                                                                             'получается слово\n' + an
+                    lose_ans = 'Ну вот и все... Я говорю букву: ' + an[len(an) - 1] + '\n' + \
+                               'И у нас получается слово\n' + an
                     session_balda.restart(message.chat.username, message.chat.id)
-                    bot.send_message(message.chat.id, lose_ans + '\nЯ проиграл... Нужно срочно отыграться! Говори букву')
+                    bot.send_message(message.chat.id, lose_ans +
+                                     '\nЯ проиграл... Нужно срочно отыграться! Говори букву')
             elif search == 'There is no such word':
                 bot.send_message(message.chat.id, 'Я не знаю такого слова... Давай ты скажешь букву заново')
             else:
