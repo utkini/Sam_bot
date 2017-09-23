@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 
 
 class NewsVillageParser(object):
+    """Данный класс предназначен для поиска нужных новостей
+
+    """
 
     def __init__(self):
         url = 'http://www.the-village.ru/village/business'
@@ -12,6 +15,10 @@ class NewsVillageParser(object):
         self.html = r.text
 
     def news_in_business(self):
+        """Первая новость от Village
+
+        :return:
+        """
         soup = BeautifulSoup(self.html, 'lxml')
         news = soup.find_all('div', class_='post-item-news')
         i = 0
@@ -27,7 +34,7 @@ class NewsVillageParser(object):
 
 
 def main():
-    n = NewsParser()
+    n = NewsVillageParser()
     n.news_in_business()
 
 
