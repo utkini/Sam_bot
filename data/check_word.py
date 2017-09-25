@@ -68,10 +68,22 @@ class UserWord(object):
                              })
 
     def set_word(self, user_id, word):
+        """Установка текущего слова пользователя
+
+        :param user_id:
+        :param word:
+        :return:
+        """
         self.coll.update({'user_id': user_id},
                          {'$set': {'session.word': word}})
 
     def set_word_bot(self, user_id, word_bot):
+        """Установка текущего слова, которое загадал бот
+
+        :param user_id:
+        :param word_bot:
+        :return:
+        """
         self.coll.update({'user_id': user_id},
                          {'$set': {'session.word_bot': word_bot}})
 
@@ -126,6 +138,11 @@ class UserWord(object):
             print(instance)
 
     def update_table(self):
+        """Обновление всей БД
+        В данном слочае в каждый документ добавляется поле и ставятся его параметры
+
+        :return:
+        """
         self.coll.update_many({},
                               {'$set': {'score':
                                             {
