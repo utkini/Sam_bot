@@ -1,7 +1,7 @@
 import telebot
 from sam_bot.data import search_word
 from sam_bot.data import data
-from sam_bot.data import config
+from sam_bot import config
 from sam_bot.data import check_word
 from sam_bot.data import news_parser
 
