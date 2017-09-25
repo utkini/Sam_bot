@@ -109,22 +109,23 @@ def answer_balda(message):
                 an = balda.get_word()
                 if balda.f == True:
                     session_balda.player_lose(message.chat.id)
-                    win_lose = session_balda.get_score(message.chat.id)
-                    score = str(win_lose['win']) + ':' + str(win_lose['lose'])
+                    score = session_balda.get_score(message.chat.id)
                     win_ans = 'У нас получилось слово:\n' + an + '\n'\
                               'И получается, что это раунд за мной! 😎\n' + \
-                              'А общий счет у нас: ' + score + '\n' + \
+                              'А общий счет:\n' + \
+                              'У тебя -> ' + str(score['win']) + '\nА у меня -> ' + str(score['lose']) + '\n'\
                               'Давай еще раз! Говори букву'
                     session_balda.restart(message.chat.id)
                     bot.send_message(message.chat.id, win_ans )
                 else:
                     session_balda.player_win(message.chat.id)
-                    win_lose = session_balda.get_score(message.chat.id)
-                    score = str(win_lose['win']) + ':' + str(win_lose['lose'])
-                    lose_ans = 'Ну вот и все... 😒 Я говорю букву: ' + an[len(an) - 1] + \
-                               '\nИ у нас получается слово\n' + an + \
-                               '\nЯ проиграл... ☹\n Общий счет сейчас: '+ score +\
-                               '️️\nМне нужно срочно отыграться! Говори букву'
+                    score = session_balda.get_score(message.chat.id)
+                    lose_ans = 'Ну вот и все... 😒 Я говорю букву: ' + an[len(an) - 1] + '\n'\
+                               'И у нас получается слово\n' + an + '\n'\
+                               'Я проиграл... ☹\n' + \
+                               'Общий счет:\n' + \
+                               'Ты -> ' + str(score['win']) + '\nЯ -> ' + str(score['lose']) + '\n'\
+                               '️️Мне нужно срочно отыграться! Говори букву'
                     session_balda.restart(message.chat.id)
                     bot.send_message(message.chat.id, lose_ans )
             elif search == 'There is no such word':
