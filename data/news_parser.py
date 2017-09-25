@@ -8,7 +8,7 @@ class NewsVillageParser(object):
     """
 
     def __init__(self):
-        url = 'http://www.the-village.ru/village/business'
+        url = 'http://www.the-village.ru/news'
 
     # get_html(self):
         r = requests.get(url)
@@ -20,22 +20,27 @@ class NewsVillageParser(object):
         :return:
         """
         soup = BeautifulSoup(self.html, 'lxml')
-        news = soup.find_all('div', class_='post-item-news')
+        news = soup.find_all('div', class_='just-bl')
         i = 0
         d = {}
         for new in news:
             i += 1
             link_news ='http://www.the-village.ru' + new.find('a', class_='post-link').get('href')
-            title = new.find('h3', class_='post-title').text
+            try:
+                title = new.find('h2', class_='post-title').text
+            except Exception:
+                title = new.find('h3', class_='post-title').text
             d[link_news]=str(title)
-            if i == 1:
+            if i == 3:
                 break
         return d
 
 
 def main():
     n = NewsVillageParser()
-    n.news_in_business()
+    di = n.news_in_business()
+    for d in di:
+        print(d, di[d])
 
 
 if __name__ == '__main__':
