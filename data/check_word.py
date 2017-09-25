@@ -46,6 +46,11 @@ class UserWord(object):
                      {
                          'word': "",
                          'word_bot': ""
+                    },
+                'score':
+                    {
+                        'win': 0,
+                        'lose': 0
                     }
              }
         check = self.coll.find({'user_id': user_id}).count()
@@ -56,7 +61,9 @@ class UserWord(object):
                              {'$set':
                                   {
                                       'session.word': "",
-                                      'session.word_bot': ""
+                                      'session.word_bot': "",
+                                      'score.win': 0,
+                                      'score.lose': 0
                                   }
                              })
 
@@ -67,6 +74,14 @@ class UserWord(object):
     def set_word_bot(self, user_id, word_bot):
         self.coll.update({'user_id': user_id},
                          {'$set': {'session.word_bot': word_bot}})
+
+    def player_win(self,user_id):
+        self.coll.update({'user_id': user_id},
+                         {'$inc': {'score.win': 1}})
+
+    def player_lose(self,user_id):
+        self.coll.update({'user_id': user_id},
+                         {'$inc': {'score.lose': 1}})
 
     def restart(self, user_id):
         self.coll.update({'user_id': user_id},
@@ -87,6 +102,13 @@ class UserWord(object):
         word_bot = sample['session']['word_bot']
         return word_bot
 
+    def get_score(self, user_id):
+        sample = self.coll.find_one({'user_id': user_id})
+        score = {'win': sample['score']['win'],
+                 'lose': sample['score']['lose']
+                 }
+        return score
+
     def how_users(self):
         count = self.coll.find({}).count()
         return count
@@ -103,6 +125,17 @@ class UserWord(object):
         for instance in sample:
             print(instance)
 
+    def update_table(self):
+        self.coll.update_many({},
+                              {'$set': {'score':
+                                            {
+                                                'win': 0,
+                                                'lose': 0
+                                            }
+                                        },
+
+                              }, True)
+
     def del_all(self):
         self.coll.remove(None)
         print('all user has been deleted')
@@ -110,6 +143,11 @@ class UserWord(object):
 
 def main():
     b = UserWord()
+    # b.create_new_user('igor','utkin','ihgorek',123)
+    # b.update_table()
+    d = b.get_score(123)
+    print(d)
+
     f = False
     if f:
         b.del_all()
