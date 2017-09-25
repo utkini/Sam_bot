@@ -18,11 +18,6 @@ import re
 # words.close()
 
 
-d = {'d': True,
-     'b': True,
-     'v': False}
-di = (map(lambda x: False, list(d.values())))
-print(di)
 
 
 
