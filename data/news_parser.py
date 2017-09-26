@@ -1,6 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
-
+"""Сделать генератор новостей от виладж
+1. Взять все новости по бизнесу
+2. Взять все новости по людям
+3. По городу
+4. Еда
+5. Стиль
+6. Развлечения
+"""
 
 class NewsVillageParser(object):
     """Данный класс предназначен для поиска нужных новостей
@@ -10,7 +17,6 @@ class NewsVillageParser(object):
     def __init__(self):
         url = 'http://www.the-village.ru/news'
 
-    # get_html(self):
         r = requests.get(url)
         self.html = r.text
 
