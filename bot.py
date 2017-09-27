@@ -8,7 +8,12 @@ from sam_bot.data import news_parser
 token = config.token
 bot = telebot.TeleBot(token)
 
-
+"""
+TODO
+1. Смена игр, деятельности бота на кнопках
+2. Декоратор админки на некоторые функции
+3. Больше стандартных фраз для бота
+"""
 def lower(text):
     return text.lower()
 
