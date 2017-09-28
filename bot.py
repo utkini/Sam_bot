@@ -36,6 +36,7 @@ session_balda = check_word.UserWord()
 n = news_parser.NewsVillageParser()
 
 
+
 def admin(func):
     @wraps(func)
     def wrap(arg):
