@@ -137,6 +137,13 @@ class UserWord(object):
         for instance in sample:
             print(instance)
 
+    def admin_check(self, message):
+        sample = self.coll.find_one({'user_id': message.chat.id})
+        if sample:
+            return True
+        else:
+            return False
+
     def update_table(self):
         """Обновление всей БД
         В данном слочае в каждый документ добавляется поле и ставятся его параметры
@@ -156,6 +163,8 @@ class UserWord(object):
     def del_all(self):
         self.coll.remove(None)
         print('all user has been deleted')
+
+
 
 
 def main():
