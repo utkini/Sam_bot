@@ -36,7 +36,6 @@ session_balda = check_word.UserWord()
 n = news_parser.NewsVillageParser()
 
 
-
 def admin(func):
     @wraps(func)
     def wrap(arg):
@@ -69,6 +68,7 @@ def support(message):
 # !!!!Написать декоратор для проверки на админа!!!!
 #
 @bot.message_handler(commands=['users'])
+@admin
 def how_users(message):
     count = session_balda.how_users()
     ans = 'Количество людей, которые играли со мной: ' + str(count)
