@@ -1,0 +1,4 @@
+class ChessGame(object):
+    '''
+    шахматы
+    '''
