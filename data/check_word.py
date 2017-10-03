@@ -137,9 +137,10 @@ class UserWord(object):
         for instance in sample:
             print(instance)
 
-    def admin_check(self, message):
-        sample = self.coll.find_one({'user_id': message.chat.id})
-        if sample:
+    def admin_check(self, user_id):
+        admin_chats = {'''here is the Admin panel'''}
+        sample = self.coll.find_one({'user_id': user_id})
+        if sample['user_id'] in admin_chats:
             return True
         else:
             return False
@@ -150,7 +151,7 @@ class UserWord(object):
 
         :return:
         """
-        self.coll.update_many({},
+        self.coll.update({},
                               {'$set': {'score':
                                             {
                                                 'win': 0,

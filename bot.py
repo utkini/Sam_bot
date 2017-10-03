@@ -13,7 +13,7 @@ bot = telebot.TeleBot(token)
 """
 TODO
 1. Смена игр, деятельности бота на кнопках
-2. Декоратор админки на некоторые функции
+2. Декоратор админки на некоторые функции +
 3. Больше стандартных фраз для бота
 """
 def lower(text):
@@ -39,7 +39,7 @@ n = news_parser.NewsVillageParser()
 def admin(func):
     @wraps(func)
     def wrap(arg):
-        if  session_balda.admin_check(arg):
+        if session_balda.admin_check(arg):
             return func(arg)
 
 
@@ -68,11 +68,11 @@ def support(message):
 # !!!!Написать декоратор для проверки на админа!!!!
 #
 @bot.message_handler(commands=['users'])
-@admin
 def how_users(message):
-    count = session_balda.how_users()
-    ans = 'Количество людей, которые играли со мной: ' + str(count)
-    bot.send_message(message.chat.id, ans)
+    if session_balda.admin_check(message.chat.id):
+        count = session_balda.how_users()
+        ans = 'Количество людей, которые играли со мной: ' + str(count)
+        bot.send_message(message.chat.id, ans)
 
 
 @bot.message_handler(commands=['news'])
