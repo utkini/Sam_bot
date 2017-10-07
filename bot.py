@@ -36,13 +36,6 @@ session_balda = check_word.UserWord()
 n = news_parser.NewsVillageParser()
 
 
-def admin(func):
-    @wraps(func)
-    def wrap(arg):
-        if session_balda.admin_check(arg):
-            return func(arg)
-
-
 
 # Обрабатываем команду /start и выводим приветствие для пользователя, обращаеся к нему по имени
 @bot.message_handler(commands=['start'])
@@ -65,7 +58,7 @@ def support(message):
 
 # Команда для админа, иказывает сколько пользователей играло в игру балда
 #
-# !!!!Написать декоратор для проверки на админа!!!!
+# Реализовал проверку на админа(без декоратора)
 #
 @bot.message_handler(commands=['users'])
 def how_users(message):
