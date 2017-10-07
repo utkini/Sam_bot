@@ -7,14 +7,14 @@ class ChooseWork(object):
 
     def balda_on(self):
         # action_dict_flase
-        self.all_false()
+        self.restart()
         self.action_dict['balda'] = True
 
     def news_on(self):
-        self.all_false()
+        self.restart()
         self.action_dict['news'] = True
 
-    def all_false(self):
+    def restart(self):
         for d in self.action_dict:
             self.action_dict[d] = False
 
