@@ -1,5 +1,5 @@
 *.db
-
+inslib/*
 data/__init__.py
 db and other/__init__.py
 db and other/pf.py
