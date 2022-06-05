@@ -1,6 +1,6 @@
 beautifulsoup4==4.6.0
 bs4==0.0.1
-lxml==4.0.0
+lxml==4.6.5
 pymongo==3.5.0
 pyTelegramBotAPI==2.1.7
 requests==2.20.0
